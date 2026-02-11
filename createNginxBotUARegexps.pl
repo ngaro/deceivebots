@@ -34,6 +34,7 @@ foreach my $pattern (@$patterns) {
 #Step 5) Create a file "is-a-bot.conf" that starts with "default 0;" and is followed by the regexps, each on a new line followed by " 1;"
 open(my $fh, '>', 'is-a-bot.conf') or die "Could not open file: $!";
 print $fh "default 0;\n";
+print $fh "\"\" 1;\n";  #A empty user agent is also bot but not in crawler-user-agents.json
 #Add the regexps to the file in a sorted way, each followed by " 1;"
 foreach my $regexp (sort @nginxCompatibleRegexps) {
     print $fh "$regexp 1;\n";
