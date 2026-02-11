@@ -31,8 +31,8 @@ foreach my $pattern (@$patterns) {
 }
 #print Dumper(\@nginxCompatibleRegexps);
 
-#Step 5) Create a file "blocked-user-agents.conf" that starts with "default 0;" and is followed by the regexps, each on a new line followed by " 1;"
-open(my $fh, '>', 'blocked-user-agents.conf') or die "Could not open file: $!";
+#Step 5) Create a file "is-a-bot.conf" that starts with "default 0;" and is followed by the regexps, each on a new line followed by " 1;"
+open(my $fh, '>', 'is-a-bot.conf') or die "Could not open file: $!";
 print $fh "default 0;\n";
 #Add the regexps to the file in a sorted way, each followed by " 1;"
 foreach my $regexp (sort @nginxCompatibleRegexps) {

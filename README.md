@@ -19,17 +19,17 @@ The files inside that dir should give you a good idea how everything works.
 To do other things with bots you can follow the steps below:
 
 ### 1. Update the list with bots
-By running `./createNginxBotUARegexps.pl` the file `blocked-user-agents.conf` that contains regex patterns for user agents of all known bots is updated.
+By running `./createNginxBotUARegexps.pl` the file `is-a-bot.conf` that contains regex patterns for user agents of all known bots is updated.
 It's recommend to run this again every month or so (and restart nginx) to keep this list up to date. You might want to use a cron job or a systemd timer to automate it.<br>
 A pre-generated list is already available in this repo, but it may be outdated. (It has been generated in february 2026)
 
 ### 2. Tell nginx about the bots
 Put the block below in your main nginx config _(This should be `/etc/nginx/nginx.conf` )_.<br>
-You might want to use `/etc/nginx/blocked-user-agents.conf` instead of pointing to this repo. In that case make sure that after running `./createNginxBotUARegexps.pl` the `blocked-user-agents.conf` file is copied inside `/etc/nginx`
+You might want to use `/etc/nginx/is-a-bot.conf` instead of using the path to this repo. In that case make sure that after running `./createNginxBotUARegexps.pl` the `is-a-bot.conf` file is copied inside `/etc/nginx`
 
 ```nginx
 map $http_user_agent $is_a_bot {
-    include /path/to/this/repo/blocked-user-agents.conf;
+    include /path/to/this/repo/is-a-bot.conf;
 }
 ```
 
@@ -49,7 +49,7 @@ Again: Take a look at the example for inspiration.
 ---
 
 ##  Contributing
-- Extra user agents that should be blocked are handled in the [monperrus/crawler-user-agents](https://github.com/monperrus/crawler-user-agents) repo.<br>We use it from there anyway, so it will be included in our list as well. And it will help other people that use that repo as well.
+- If you found extra user agents that are bots send a pull request or issue to the [monperrus/crawler-user-agents](https://github.com/monperrus/crawler-user-agents) repo.<br>(We use it from there anyway, so it will be automatically be included in our list as well. (And it will help other people that use that repo as well.)
 - If you have bugfixes for my setup, other interesting examples, suggestions, ... you can create a issue or send a pull request here. Any contribution is welcome.
 
 ---

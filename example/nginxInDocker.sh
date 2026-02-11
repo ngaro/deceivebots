@@ -6,8 +6,8 @@ IMAGE=nginx:1.29.5 #Docker image to be used
 PORT=8000   #Port on which nginx will be available on the host machine ( with http://localhost:$PORT ). You can still contact nginx directly on the container with http://IP_OF_THE_CONTAINER:80 if you want
 
 #Nginx config files. Most important files in the example
-BLOCKED_USER_AGENTS=../blocked-user-agents.conf #This will become /etc/nginx/blocked-user-agents.conf in the container, and is the file that contains the regex patterns of the user agents that are bots
-NGINX_CONFIG=./nginx.conf #This will become /etc/nginx/nginx.conf in the container, here we tell it when $blocked_user_agent should be 0 or 1 (using blocked-user-agents.conf)
+BOT_USER_AGENTS=../is-a-bot.conf #This will become /etc/nginx/is-a-bot.conf in the container, and is the file that contains the regex patterns of the user agents that are bots
+NGINX_CONFIG=./nginx.conf #This will become /etc/nginx/nginx.conf in the container, here we tell it when $is_a_bot should be 0 or 1 (using 'is-a-bot.conf')
 DEFAULT_SITE_CONFIG=./default.conf #This will become /etc/nginx/conf.d/default.conf in the container, this the config of a site. Here we tell it how it should react when the visitor is a bot or a real browser
 
 #Pages to be served
@@ -29,9 +29,9 @@ if [ ! -f "$DEFAULT_SITE_CONFIG" ]; then
     echo "Error: $DEFAULT_SITE_CONFIG not found! This example uses relative paths, so make sure to run this script from the example directory."
     exit 1
 fi
-if [ ! -f "$BLOCKED_USER_AGENTS" ]; then
-    echo "Error: $BLOCKED_USER_AGENTS not found! This example uses relative paths, so make sure to run this script from the example directory."
-    echo "If you are doing this, make sure to use the perl script to create the blocked-user-agents.conf file in the directory above this one."
+if [ ! -f "$BOT_USER_AGENTS" ]; then
+    echo "Error: $BOT_USER_AGENTS not found! This example uses relative paths, so make sure to run this script from the example directory."
+    echo "If you are doing this, make sure to use the perl script to create the is-a-bot.conf file in the directory above this one."
     exit 1
 fi
 
@@ -45,7 +45,7 @@ fi
 docker run -d --rm --name $CONTAINER -p $PORT:80 \
     -v $(realpath $NGINX_CONFIG):/etc/nginx/nginx.conf:ro \
     -v $(realpath $DEFAULT_SITE_CONFIG):/etc/nginx/conf.d/default.conf:ro \
-    -v $(realpath $BLOCKED_USER_AGENTS):/etc/nginx/blocked-user-agents.conf:ro \
+    -v $(realpath $BOT_USER_AGENTS):/etc/nginx/is-a-bot.conf:ro \
     -v $(realpath $BOTPAGE):/usr/share/nginx/html/bot.html:ro \
     $IMAGE && {
         echo "Nginx is running, you can access it at http://localhost:$PORT with different user agents to see the different responses."
