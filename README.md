@@ -21,7 +21,7 @@ To do other things with bots you can follow the steps below:
 ### 1. Update the list with bots
 By running `./createNginxBotUARegexps.pl` the file `is-a-bot.conf` that contains regex patterns for user agents of all known bots is updated.
 It's recommend to run this again every month or so (and restart nginx) to keep this list up to date. You might want to use a cron job or a systemd timer to automate it.<br>
-A pre-generated list is already available in this repo, but it may be outdated. (It has been generated on the 11 february 2026)
+A pre-generated list is already available in this repo, but it may be outdated. _(It's from 11 february 2026)_
 
 ### 2. Tell nginx about the bots
 Put the block below in your main nginx config _(This should be `/etc/nginx/nginx.conf` )_.<br>
