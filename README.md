@@ -1,6 +1,6 @@
 # Nginx Bot Deceiver
 
-This repo is meant to be used with nginx to treat bots in a different way then regular users. _(Block them, redirect them, ...)._
+This repo is meant to be used with nginx to treat bots in a different way then regular users.<br>_(Trick them, block them, redirect them, ...)._
 
 We use the, regularly updated, json from the [monperrus/crawler-user-agents](https://github.com/monperrus/crawler-user-agents/blob/master/crawler-user-agents.json) repo to create a nginx-compatible config to identify bots by their user agent.
 An example on how to use it is included.
